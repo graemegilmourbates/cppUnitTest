@@ -56,7 +56,8 @@ std::vector<test_result> Test<F>::run(){
   std::vector<test_result> results;
   std::cout << "Running Test Suite: " << description << std::endl;
   for(auto foo : tests){
-    std::cout << "\t" << buff << "Running test " << i << " out of " << total << std::endl;
+    std::cout << "\t" << buff;
+    std::cout << "Running test " << i << " out of " << total << std::endl;
     test_result r;
     r.description=foo.description;
     foo.test(r);

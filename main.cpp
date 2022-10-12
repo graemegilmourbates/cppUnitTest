@@ -14,14 +14,14 @@ void test_negative_inputs(test_result& r){
   }
 }
 
-void bar(test_result& r){
+void will_fail(test_result& r){
   r.log="Intentional fail";
   r.passed=false;
 }
 
 int main(){
   Test tester=Test("Sum function tests", "Test Negatives", test_negative_inputs);
-  tester.add_test("Bar", bar);
+  tester.add_test("Will fail test", will_fail);
   tester.run();
   return 0;
 }
