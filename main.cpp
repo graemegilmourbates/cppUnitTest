@@ -5,7 +5,7 @@ int sum(int a, int b){
   return a+b;
 }
 
-const void test_negative_inputs(test_result& r){
+void test_negative_inputs(test_result& r){
   if(sum(1,-2)==-1){
     r.passed=true;
   } else {
@@ -14,7 +14,7 @@ const void test_negative_inputs(test_result& r){
   }
 }
 
-const void will_fail(test_result& r){
+void will_fail(test_result& r){
   r.log="Intentional fail";
   r.passed=false;
 }

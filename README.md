@@ -4,6 +4,9 @@
 - Log Test Data
 - More To come soon!
 
+Unit tests must be declared as void funtions that take reference to
+a 'test_result' instance
+
 ## Useage Example
 ```
 int sum(int a, int b){
@@ -12,10 +15,10 @@ int sum(int a, int b){
 
 void test_negative_inputs(test_result& r){
   if(sum(1,-2)==-1){
-    r.passed = true;
+    r.passed=true;
   } else {
     r.log="Expected: -1 Got: "+std::to_string(sum(1,-2));
-    r.passed = false;
+    r.passed=false;
   }
 }
 
@@ -25,8 +28,10 @@ void will_fail(test_result& r){
 }
 
 int main(){
-  Test tester=Test("Sum function tests", "Test Negatives", test_negative_inputs);
+  Test tester=Test("Sum function tests");
+  tester.add_test("Negative Number Test", test_negative_inputs);
   tester.add_test("Will fail test", will_fail);
+  tester.add_test("Negative Number Test", test_negative_inputs);
   tester.run();
   return 0;
 }
