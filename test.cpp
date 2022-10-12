@@ -4,7 +4,7 @@ using namespace std;
 template <typename F>
 struct test_case{
   string description;
-  F func;
+  function<F>* func;
 };
 
 template <typename F>
@@ -15,19 +15,21 @@ struct result{
 };
 
 template <class F>
-Test<F>::Test(string description, const F& function){
+Test<F>::Test(string description, function<F>* function){
   test_case.description=description;
   test_case.func=function;
 }
 
 template <class F>
-void Test<F>::run(){
+bool Test<F>::run(){
   cout << "\tRunning: " << test_case.description << endl;
   auto r=test_case.func();
   if(r.passed){
     cout << "\tTest pass" << endl;
+    cout << "\tExpected: " << r.expected << " Got: " << r.result << endl;
   } else {
     cout << "\tTest fails" << endl;
     cout << "\tExpected: " << r.expected << " Got: " << r.result << endl;
   }
+  return r.passed;
 }
