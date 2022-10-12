@@ -22,12 +22,12 @@ Test<F>::Test(string description, const F& function){
 
 template <class F>
 void Test<F>::run(){
-  cout << "Running: " << test_case.description << endl;
+  cout << "\tRunning: " << test_case.description << endl;
   auto r=test_case.func();
   if(r.passed){
-    cout << "Test pass" << endl;
+    cout << "\tTest pass" << endl;
   } else {
-    cout << "Test fails" << endl;
-    cout << "Expected: " << r.expected << " Got: " << r.result << endl;
+    cout << "\tTest fails" << endl;
+    cout << "\tExpected: " << r.expected << " Got: " << r.result << endl;
   }
 }
