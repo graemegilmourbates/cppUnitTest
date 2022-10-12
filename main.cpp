@@ -26,11 +26,22 @@ int main(){
     "Test for sum function",
     "Test Against Built in:",
     []()->auto{
-      int a = rand();
-      int b = rand();
+      int a=rand();
+      int b=rand();
       result<int> r;
       r.result=sum(a,b);
       r.expected=a+b;
+      r.passed=ASSERT(r.result, r.expected);
+      return r;
+  });
+  test.add_test(
+    "Test Wrong Answers",
+    []()->auto{
+      int a=0;
+      int b=0;
+      result<int> r;
+      r.result=sum(a,b);
+      r.expected=5;
       r.passed=ASSERT(r.result, r.expected);
       return r;
     }

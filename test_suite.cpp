@@ -10,6 +10,12 @@ Test_Suite<F>::Test_Suite(
   description=suite_description;
   tests.push_back(Test(test_description, test));
 }
+
+template <class F>
+void Test_Suite<F>::add_test(string description, const F& test){
+  tests.push_back(Test(description, test));
+}
+
 template <class F>
 void Test_Suite<F>::run(){
   int i=1;
