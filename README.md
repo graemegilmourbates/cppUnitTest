@@ -1,10 +1,10 @@
-#CPP Unit Test Framework
-###Features:
+# CPP Unit Test Framework
+### Features:
 - Generate Test Suite
 - Log Test Data
 - More To come soon!
 
-##Useage Example
+## Useage Example
 ```
 int sum(int a, int b){
   return a+b;
@@ -32,7 +32,7 @@ int main(){
 }
 ```
 
-##Outputs
+## Outputs
 ```
 Running Test Suite: Sum function tests
 	#### Running test 1 out of 2
