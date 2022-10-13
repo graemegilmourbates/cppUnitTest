@@ -1,9 +1,16 @@
+/*
+  Author: Graeme Bates
+*/
 #include <iostream>
 #include <vector>
 #include <functional>
+#include <fstream>
 
 const std::string BUFF="#### ";
 const std::string FAILURE="** ";
+const std::string RED="\033[1;31m";
+const std::string GREEN="\033[1;32m";
+const std::string RESTORE="\033[0m";
 
 struct test_result{
   std::string description;
@@ -37,12 +44,14 @@ class Test{
       int repeats
     );
     std::vector<test_result> run();
+    std::vector<test_result> run(std::string);
     test_result run_repeating_test(repeating_test*);
 
     std::string description;
   private:
     std::vector<test_case*> tests;
     std::vector<repeating_test*> repeating_tests;
+    test_result run_test(test_case*);
 };
 
 Test::Test(std::string test_suite_description){
@@ -97,6 +106,13 @@ test_result Test::run_repeating_test(repeating_test *test){
   return batch_result;
 }
 
+test_result Test::run_test(test_case* tst){
+  test_result r;
+  r.description=tst->description;
+  tst->test(r);
+  return r;
+}
+
 std::vector<test_result> Test::run(){
   int i=1;
   int passed=0;
@@ -105,29 +121,76 @@ std::vector<test_result> Test::run(){
   std::cout << "Running: " << description << std::endl;
   for(auto tst : tests){
     std::cout << "\t" << BUFF;
-    std::cout << "Running test " << i << " out of " << total << std::endl;
-    test_result r;
-    r.description=tst->description;
-    tst->test(r);
+    std::cout << "Test " << i << " : " << total;
+    test_result r=run_test(tst);
     if(r.passed){
+      std::cout << GREEN <<" PASS" << RESTORE << std::endl;
       passed++;
     } else {
-      std::cout << "\t\t" << FAILURE;
-      std::cout << r.log << ": " << r.description << std::endl;
+      std::cout << RED << " FAILED" << RESTORE << std::endl;
+      std::cout << "\t\t";
+      std::cout << RED << r.log << " ";
+      std::cout << r.description << RESTORE << std::endl;
     }
     i++;
   }
   for(auto tst : repeating_tests){
     std::cout << "\t" << BUFF;
-    std::cout << "Running test " << i << " out of " << total << std::endl;
-    std::cout << "\t\t" << BUFF;
-    std::cout << "Batch test: " << tst->description << std::endl;
+    std::cout << "Test " << i << " : " << total;
     auto r=run_repeating_test(tst);
     if(r.passed){
+      std::cout << GREEN << " PASS" << RESTORE << std::endl;
       passed++;
+    } else {
+      std::cout << RED << " Fail" << RESTORE << std::endl;
+      std::cout << "\t\t";
+      std::cout << RED << r.log << " tests on: ";
+      std::cout << r.description << RESTORE << std::endl;
     }
     i++;
   }
   std::cout << "Passed " << passed << " out of " << total << std::endl;
+  return results;
+}
+
+std::vector<test_result> Test::run(std::string file){
+  std::ofstream outFile;
+  outFile.open(file);
+  int i=1;
+  int passed=0;
+  int total=tests.size()+repeating_tests.size();
+  std::vector<test_result> results;
+  outFile << description << "\n";
+  for(auto tst : tests){
+    outFile << "\t" << BUFF;
+    test_result r=run_test(tst);
+    if(r.passed){
+      outFile << " PASS ";
+      outFile << tst->description << "\n";
+      passed++;
+    } else {
+      outFile << " FAILED ";
+      outFile << tst->description << "\n";
+      outFile << "\t\t";
+      outFile << r.log << " ";
+      outFile << r.description << "\n";
+    }
+    i++;
+  }
+  for(auto tst : repeating_tests){
+    outFile << "\t" << BUFF;
+    auto r=run_repeating_test(tst);
+    if(r.passed){
+      outFile << " PASS ";
+      outFile << tst->description << "\n";
+      passed++;
+    } else {
+      outFile <<" Fail ";
+      outFile << r.log << " tests on: ";
+      outFile << r.description << "\n";
+    }
+    i++;
+  }
+  outFile << "Passed " << passed << " out of " << total << "\n";
   return results;
 }
