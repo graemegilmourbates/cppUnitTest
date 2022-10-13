@@ -2,7 +2,7 @@
 
 
 ## All test functions must share a signature
-### void function that takes a reference to a test_result
+function signature is void type with a single reference to a test_result parameter
 ### Can be either defined functions or lambdas
 ```
 void test_function(test_result& r){
