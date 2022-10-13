@@ -1,4 +1,20 @@
 # CPP Unit Test Framework
+
+
+## All test functions must have share a signature, void function that takes a reference to a test_result
+### Can be either defined functions or lambdas
+```
+void test_function(test_result& r){
+	r.passed=true; //woo it passed
+}
+
+[](test_result& r)->void{
+	r.passed=false; //ah man, it failed lets log it
+	r.log="Test failed because...";
+}
+```
+
+
 ### Features:
 - Generate Test Suite
 - Log Test Data
