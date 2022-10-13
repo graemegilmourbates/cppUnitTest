@@ -1,8 +1,8 @@
 # CPP Unit Test Framework
 
 
-## All test functions must share a signature
-function signature is void type with a single reference to a test_result parameter
+### All test functions must share a signature
+Function signature is void type with a single reference to a test_result parameter
 ### Can be either defined functions or lambdas
 ```
 void test_function(test_result& r){
@@ -19,10 +19,8 @@ void test_function(test_result& r){
 ### Features:
 - Generate Test Suite
 - Log Test Data
+- Store Test Data to a File
 - More To come soon!
-
-Unit tests must be declared as void funtions that take reference to
-a 'test_result' instance
 
 ## Useage Example
 ```
