@@ -1,7 +1,8 @@
 # CPP Unit Test Framework
 
 
-## All test functions must have share a signature, void function that takes a reference to a test_result
+## All test functions must share a signature
+### void function that takes a reference to a test_result
 ### Can be either defined functions or lambdas
 ```
 void test_function(test_result& r){
