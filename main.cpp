@@ -36,7 +36,7 @@ void test_negative_inputs(test_result& r){
   }
 }
 
-void will_fail(test_result& r){
+void test_will_fail(test_result& r){
   r.log="Intentional fail";
   r.passed=false;
 }
@@ -58,8 +58,12 @@ int main(){
   Test tester=Test("Sum function tests");
   tester.add_test("Simple Addition Tests", test_simple_case);
   tester.add_test("Negative Number Test", test_negative_inputs);
-  tester.add_test("Will fail test", will_fail);
-  tester.add_test("Random inputs", test_random_cases, 2);
+  tester.add_test("Will Fail", test_will_fail);
+  tester.add_test("Random inputs", test_random_cases, 10);
+  tester.add_test("Lambda test", [](test_result& r)->void{
+    r.passed=true;
+  });
+  tester.run();
   tester.run("test.txt");
   return 0;
 }

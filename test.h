@@ -129,7 +129,7 @@ std::vector<test_result> Test::run(){
     } else {
       std::cout << RED << " FAILED" << RESTORE << std::endl;
       std::cout << "\t\t";
-      std::cout << RED << r.log << " ";
+      std::cout << RED << r.log << " on Test: ";
       std::cout << r.description << RESTORE << std::endl;
     }
     i++;
@@ -165,15 +165,14 @@ std::vector<test_result> Test::run(std::string file){
     outFile << "\t" << BUFF;
     test_result r=run_test(tst);
     if(r.passed){
-      outFile << " PASS ";
+      outFile << " PASSED ";
       outFile << tst->description << "\n";
       passed++;
     } else {
       outFile << " FAILED ";
       outFile << tst->description << "\n";
       outFile << "\t\t";
-      outFile << r.log << " ";
-      outFile << r.description << "\n";
+      outFile << r.log << "\n";
     }
     i++;
   }
@@ -181,7 +180,7 @@ std::vector<test_result> Test::run(std::string file){
     outFile << "\t" << BUFF;
     auto r=run_repeating_test(tst);
     if(r.passed){
-      outFile << " PASS ";
+      outFile << " PASSED ";
       outFile << tst->description << "\n";
       passed++;
     } else {
